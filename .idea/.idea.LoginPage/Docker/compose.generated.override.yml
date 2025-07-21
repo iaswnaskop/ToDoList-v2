@@ -16,7 +16,7 @@ services:
     - "--mode=server"
     - "--frontend-port=57000"
     - "--backend-port=57200"
-    - "--roslyn-worker-port=57413"
+    - "--roslyn-worker-port=57400"
     - "--timeout=60"
     environment:
       ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net9.0/LoginPage.staticwebassets.runtime.CT.json"
@@ -25,9 +25,9 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "login-app:dev"
     ports:
-    - "127.0.0.1:57013:57000"
-    - "127.0.0.1:57213:57200"
-    - "127.0.0.1:57413:57413"
+    - "127.0.0.1:57000:57000"
+    - "127.0.0.1:57200:57200"
+    - "127.0.0.1:57400:57400"
     volumes:
     - "C:\\Users\\kopanosi\\RiderProjects\\LoginPage\\LoginPage:/app:rw"
     - "C:\\Users\\kopanosi\\RiderProjects\\LoginPage:/src:rw"
@@ -36,5 +36,5 @@ services:
       Linux64:/opt/JetBrains/RiderDebuggerTools"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2025.1.4\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     - "C:\\Users\\kopanosi\\AppData\\Local\\JetBrains\\Rider2025.1\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2025_7_11_12_37_22:/var/opt/JetBrains/RiderDebuggerTools:rw"
+      JetBrains.Debugger.Worker.2025_7_21_13_33_18:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
