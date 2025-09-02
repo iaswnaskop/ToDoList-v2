@@ -77,7 +77,8 @@ public class LoginService(DataContext context,IConfiguration _configuration ) : 
     {
         try
         {
-        return await context.Roles.ToListAsync();
+            var roles = await context.Roles.ToListAsync();
+            return roles;
 
         }
         catch (Exception e)

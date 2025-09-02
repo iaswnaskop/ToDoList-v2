@@ -9,10 +9,11 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 
-COPY ["LoginPage/LoginPage.csproj", "LoginPage/"]
-RUN dotnet restore "LoginPage/LoginPage.csproj"
-COPY . .
-WORKDIR "/src/LoginPage"
+COPY ["back/LoginPage.sln", "back/"]
+COPY ["back/LoginPage/LoginPage.csproj", "back/LoginPage/"]
+RUN dotnet restore "back/LoginPage.sln"
+COPY ["back/", "back/"]
+WORKDIR "/src/back/LoginPage"
 RUN dotnet build "LoginPage.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish image

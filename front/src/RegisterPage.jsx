@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 
-function RegisterPage({onBackToLogin}){
+function RegisterPage({onBackToLogin, onRegisterSuccess}){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -11,9 +11,9 @@ function RegisterPage({onBackToLogin}){
     useEffect(() => {
         const fetchRoles = async () => {
             try{
-                const response = await fetch("http://localhost:5098/api/roles");
+                const response = await fetch("http://localhost:9090/api/roles");
                 const data = await response.json();
-                
+                console.log(data);
                 setRoles(data);
             }
             catch(error){
@@ -25,13 +25,16 @@ function RegisterPage({onBackToLogin}){
  
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Send data:",selectedRole)
+        console.log(typeof selectedRole);
 
         try{
-            const response = await fetch("http://localhost:5098/api/register",{
+            const response = await fetch("http://localhost:9090/api/register",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({email, password, name, selectedRole})
+                body: JSON.stringify({email, password, name, roleId: parseInt(selectedRole)})
             });
+            
             
             if(response.ok){
                 onRegisterSuccess();
@@ -85,7 +88,7 @@ function RegisterPage({onBackToLogin}){
                     <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">--Select Role--</option>
                             {roles.map((role) => (
-                                <option key={role.id} value={role.name}>{role.name}</option>
+                                <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
                     </select>
                 </div>

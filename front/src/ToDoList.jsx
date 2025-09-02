@@ -19,7 +19,7 @@ function ToDolist({onLogout}){
         const fetchTasks = async () => {
             try {
                 
-                const response = await fetch(`http://localhost:5098/api/getUserByToken`,{
+                const response = await fetch(`http://localhost:9090/api/getUserByToken`,{
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -62,7 +62,7 @@ function ToDolist({onLogout}){
             };
             console.log(newTodo);
 
-            fetch("http://localhost:5098/api/createTask", {
+            fetch("http://localhost:9090/api/createTask", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -104,7 +104,7 @@ function ToDolist({onLogout}){
         }
         console.log("Updated Data", updatedTask);
 
-        fetch(`http://localhost:5098/api/updateTask/${id}`, {
+        fetch(`http://localhost:9090/api/updateTask/${id}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -123,7 +123,7 @@ function ToDolist({onLogout}){
 
 
     const deleteTodo = (id) => {
-        fetch(`http://localhost:5098/api/deleteTask/${id}`,{
+        fetch(`http://localhost:9090/api/deleteTask/${id}`,{
             method: "DELETE",
              headers: {
                 "Authorization": `Bearer ${token}`

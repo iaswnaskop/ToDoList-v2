@@ -1,0 +1,40 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  web_api:
+    build:
+      context: "C:\\Users\\kopanosi\\source\\repos\\ToDoList-v2"
+      dockerfile: "back/LoginPage/Dockerfile"
+      target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
+    command: []
+    entrypoint:
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57406"
+    - "--timeout=60"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net9.0/LoginPage.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    image: "login-app:dev"
+    ports:
+    - "127.0.0.1:57006:57000"
+    - "127.0.0.1:57206:57200"
+    - "127.0.0.1:57406:57406"
+    volumes:
+    - "C:\\Users\\kopanosi\\source\\repos\\ToDoList-v2\\back\\LoginPage:/app:rw"
+    - "C:\\Users\\kopanosi\\source\\repos\\ToDoList-v2\\back:/src:rw"
+    - "C:\\Users\\kopanosi\\.nuget\\packages:/root/.nuget/packages"
+    - "C:\\Users\\kopanosi\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2025.1.4\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2025.1.4\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\kopanosi\\AppData\\Local\\JetBrains\\Rider2025.1\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_9_02_14_11_28:/var/opt/JetBrains/RiderDebuggerTools:rw"
+    working_dir: "/app"

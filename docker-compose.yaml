@@ -3,7 +3,9 @@ version: '3.8'
 services:
   web_api:
     container_name: login_app
-    build: .
+    build:
+        context: .
+        dockerfile: back/LoginPage/Dockerfile
     image: login-app:1.0.0
     ports:
       - "9090:8080"

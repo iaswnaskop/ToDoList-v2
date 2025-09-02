@@ -20,7 +20,7 @@ function App() {
      {!isLoggedIn ? (
       isRegistering ? (
         <RegisterPage
-          onRegisterSuccess={() => setIsRegistering(flase)}
+          onRegisterSuccess={() => setIsRegistering(false)}
           onBackToLogin={() => setIsRegistering(false)}
         />
       ): (
