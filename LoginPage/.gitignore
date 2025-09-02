@@ -486,6 +486,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+# GitHub Copilot
+**/CopilotIndices/
+
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
