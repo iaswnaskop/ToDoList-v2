@@ -10,4 +10,5 @@ public interface ILoginService
     Task<UserModel> GetUserFromToken(string token);
     Task<List<Role>> GetRoles();
     Task<List<UserModel>> GetAllUsers();
+    Task<UserModel> GetUserById(Guid id);
 }

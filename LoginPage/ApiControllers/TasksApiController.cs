@@ -30,35 +30,11 @@ public class TasksApiController: ControllerBase
     }
 
 
-    /*[HttpGet]
-    [Route("tasks")]
-    public async Task<IActionResult> GetTasks()
-    {
-        var tasks = await _tasksService.GetTasks();
-        if (tasks == null)
-            return NotFound("No tasks found");
-        return Ok(tasks);
-    }*/
-    
-    // [HttpPost]
-    // [Route("createTaskByAdmin")]
-    // public async Task<IActionResult> CreateTaskByAdmin(Models.CreateTaskModel task)
-    // {
-    //     if (task == null)
-    //         return BadRequest("Task cannot be null");
-    //     
-    //     
-    //     var createdTask = await _tasksService.CreateTaskByAdmin(task);
-    //     
-    //     if (createdTask == null)
-    //         return BadRequest("Failed to create task");
-    //     
-    //     return Ok(createdTask);
-    // }
+   
     
     [HttpPost]
-    [Route("createTaskByUser")]
-    public async Task<IActionResult> CreateTaskByUser(Models.CreateTaskModel task)
+    [Route("createTask")]
+    public async Task<IActionResult> CreateTaskByUser([FromBody]Models.CreateTaskModel task)
     {
         if (task == null)
             return BadRequest("Task cannot be null");

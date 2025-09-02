@@ -201,6 +201,36 @@ public class LoginService(DataContext context,IConfiguration _configuration ) : 
             return null;
         }
     }
+    public async Task<UserModel> GetUserById(Guid id)
+    {
+        try
+        {
+            var user = await context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                Console.WriteLine("User not found");
+                return null;
+            }
+
+            var userModel = new UserModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                RoleName = user.Role?.Name
+            };
+            return userModel;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     private string CreateToken(User user)
     {

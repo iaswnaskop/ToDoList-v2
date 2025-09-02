@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -35,6 +35,14 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey!))
         };
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ITasksService, TasksService>();
 
@@ -43,25 +51,16 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(9090); 
-// });
-// builder.Services.AddHealthChecks()
-//     .AddNpgSql(connectionString: builder.Configuration.GetConnectionString("DefaultConnection"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+
 
 
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
 app.UseRouting();
 try
 {
@@ -76,34 +75,8 @@ catch (Exception ex)
     throw;
 }
 
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path.StartsWithSegments("/LoginView/LoginIndex"))
-    {
-        Console.WriteLine($"Request Path: {context.Request.Path}");
-
-        var token = context.Request.Query["token"].FirstOrDefault() ??
-                    context.Request.Cookies["token"] ?? 
-                    context.Request.Headers["Authorization"].FirstOrDefault()?.Replace("Bearer ", "");
-
-        if (!string.IsNullOrEmpty(token))
-        {
-            Console.WriteLine("Token found");
-            context.Request.Headers["Authorization"] = $"Bearer {token}";
-        }
-    }
-    
-    await next();
-});
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+app.MapControllers();
 
 app.Run();
