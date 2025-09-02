@@ -1,0 +1,7 @@
+﻿services:
+  loginpage:
+    image: loginpage
+    build:
+      context: .
+      dockerfile: LoginPage/Dockerfile
+
